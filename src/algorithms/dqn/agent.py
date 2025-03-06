@@ -11,15 +11,15 @@ from src.algorithms.dqn.buffer import ExperienceReplayBuffer
 from src.algorithms.dqn.net import Net  
 
 class Agent:
-    def __init__(self, state_size: int, action_size: int, config: dict):
-        self.lr = config['learning_rate']
-        self.gamma = config['discount_rate']
-        self.buffer_size = config['buffer_size']
-        self.batch_size = config['batch_size']
-        self.target_update = config['target_update_steps']
+    def __init__(self, cfg: dict):
+        self.lr = cfg['learning_rate']
+        self.gamma = cfg['discount_rate']
+        self.buffer_size = cfg['buffer_size']
+        self.batch_size = cfg['batch_size']
+        self.target_update = cfg['target_update_steps']
         
-        self.state_size = state_size
-        self.action_size = action_size
+        self.state_size = cfg['state_size']
+        self.action_size = cfg['action_size']
 
         self.original_qnet = Net(self.state_size, self.action_size)
         self.target_qnet = Net(self.state_size, self.action_size)
@@ -27,7 +27,7 @@ class Agent:
 
         self.epsilon_start = 1.0
         self.epsilon_end = 0.1
-        self.epsilon_decay = (self.epsilon_start - self.epsilon_end) / config['total_timesteps']
+        self.epsilon_decay = (self.epsilon_start - self.epsilon_end) / cfg['total_timesteps']
         self.epsilon = self.epsilon_start
 
         self.replay = ExperienceReplayBuffer(self.buffer_size, self.batch_size)
