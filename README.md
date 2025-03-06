@@ -1,1 +1,1 @@
-# Reinforcement-Learning-with-Pytorch
+# PytorchRL
